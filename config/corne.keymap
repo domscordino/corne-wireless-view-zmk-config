@@ -23,10 +23,10 @@
 // holding the thumb locks the layer; pressing it again unlocks.
 // Drag Scroll and Navigator CPI +/- belong to the Voyager trackball, so they are empty here.
 #define FN_MOUSE_BINDINGS \
-   &trans  &trans         &trans         &trans        &trans  &trans    &trans  &msc SCRL_LEFT &msc SCRL_UP &msc SCRL_DOWN &msc SCRL_RIGHT &trans \
-   &kp F1  &kp F2         &kp F3         &kp F4       &kp F5  &kp F6    &trans  &mkp LCLK      &mkp RCLK    &none          &trans          &trans \
-   &kp F7  &kp F8         &kp F9         &kp F10       &kp F11 &kp F12   &trans  &tog 5         &none        &none          &trans          &trans \
-                          &trans         &trans        &trans            &trans  &trans         &trans
+   &kp F1  &kp F2  &kp F3         &kp F4     &kp F5     &kp F6    &trans  &msc SCRL_LEFT &msc SCRL_UP  &msc SCRL_DOWN &msc SCRL_RIGHT &trans \
+   &trans  &trans  &none          &mkp LCLK  &mkp RCLK  &trans    &trans  &mmv MOVE_LEFT &mmv MOVE_UP  &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans \
+   &kp F7  &kp F8  &kp F9         &kp F10    &kp F11    &kp F12   &trans  &tog 5         &none         &none          &trans          &trans \
+                   &trans         &trans     &trans               &trans  &trans         &trans
 
 / {
         behaviors {
@@ -125,10 +125,10 @@
 
                 fn_mouse_layer {
 // -----------------------------------------------------------------------------------------
-// |      |     |     |     |     |     |   |     |WH LT|WH UP|WH DN|WH RT|      |
-// |  F1  |  F2 |  F3 |  F4 |  F5 |  F6 |   |     | LCLK| RCLK|     |     |      |
+// |  F1  |  F2 |  F3 |  F4 |  F5 |  F6 |   |     |WH LT|WH UP|WH DN|WH RT|      |
+// |      |     |     | LCLK| RCLK|     |   |     |MS LT|MS UP|MS DN|MS RT|      |
 // |  F7  |  F8 |  F9 | F10 | F11 | F12 |   |     | LOCK|     |     |     |      |
-//              |(held)|    |     |   |     |     |     |
+//                    |(held)|    |     |   |     |     |     |
                         display-name = "Fn/Mouse";
                         bindings = <FN_MOUSE_BINDINGS>;
                 };
