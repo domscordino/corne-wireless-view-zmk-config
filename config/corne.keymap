@@ -55,6 +55,15 @@
                         hold-trigger-key-positions = <LEFT_KEYS THUMB_KEYS>;
                         hold-trigger-on-release;
                 };
+                // Left inner thumb: tap for a sticky Shift (applies to the next
+                // key only), hold for a layer.
+                sk_lt: sticky_shift_layer_tap {
+                        compatible = "zmk,behavior-hold-tap";
+                        #binding-cells = <2>;
+                        flavor = "balanced";
+                        tapping-term-ms = <200>;
+                        bindings = <&mo>, <&sk>;
+                };
         };
 
         keymap {
@@ -65,13 +74,14 @@
 // |  DEL |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | ESC  |
 // | BKSP |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI| TAB | ENT  |
 // | CAPS |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  .  |  ,  |  '  | GUI  |
-//                    | MO4 | MO2 | SFT |   | SPC | MO1 | MO3 |
+//                    | MO4 | MO1 |SK/L2|   | SPC | MO3 |     |
+// SK/L2: tap = sticky Shift, hold = Symbols. Right outer thumb is left empty.
                         display-name = "Main";
                         bindings = <
    &kp DEL   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp ESC
    &kp BSPC  &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp TAB &kp RET
    &kp CAPS  &kp Z &kp X           &kp C           &kp V            &kp B   &kp N                &kp M            &kp DOT         &kp COMMA       &kp SQT &kp LGUI
-                                   &mo 4           &mo 2            &kp LSHFT   &kp SPACE        &mo 1            &mo 3
+                                   &mo 4           &mo 1            &sk_lt 2 LSHFT  &kp SPACE    &mo 3            &none
                         >;
                 };
                 arrow_layer {
@@ -79,7 +89,7 @@
 // |      | BRI-| BRI+| VOL-| VOL+|     |   |     | HOME| PGUP| PGDN| END |      |
 // |      |     | GUI | ALT | CTRL|     |   |     |  LFT|  UP | DWN | RGT |      |
 // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   |     |     |     |     |     |      |
-//                    |     |     |     |   |     |(held)|    |
+//                    |     |(held)|    |   |     |     |     |
 // Blank keys fall through to Main. Bluetooth keys sit on the bottom-left row
 // (unused on the Voyager Arrow layer) so pairing can still be switched or cleared.
                         display-name = "Arrow";
@@ -96,7 +106,7 @@
 // |      |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  `  |  ~  |      |
 // |      |  >  |{/GUI|[/ALT|(/CTL|  /  |   |  _  |  "  |  :  |  ;  |  =  |      |
 // |      |  <  |  }  |  ]  |  )  |  ?  |   |+/C+=|-/C+-|  \  |  |  |     |      |
-//                    |     |(held)|    |   |     |     |     |
+//                    |     |     |(held)|  |     |     |     |
 // Blank keys fall through to Main. Holding + or - sends Ctrl+= / Ctrl+- (zoom in / out).
                         display-name = "Symbols";
                         bindings = <
@@ -112,7 +122,7 @@
 // |      |     |     |     |     |     |   |     |     |     |     |     |      |
 // |      |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  |      |
 // |      |     |     |     |     |     |   |  +  |  -  |     |     |     |      |
-//                    |     |     |     |   |     |     |(held)|
+//                    |     |     |     |   |     |(held)|    |
 // Blank keys fall through to Main.
                         display-name = "Numbers";
                         bindings = <
