@@ -74,15 +74,15 @@
 // |  DEL |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | ESC  |
 // | BKSP |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI| TAB | ENT  |
 // | CAPS |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  .  |  ,  |  '  | GUI  |
-//                    | MO4 | MO1 |SK/L2|   | SPC | MO3 |F13/S|
+//                    | MO4 | MO1 |SK/L2|   | SPC | MO3 |F18/S|
 // SK/L2: tap = sticky Shift, hold = Symbols.
-// F13/S: tap = F13, hold = Shift.
+// F18/S: tap = F18, hold = Shift.
                         display-name = "Main";
                         bindings = <
    &kp DEL   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp ESC
    &kp BSPC  &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp TAB &kp RET
    &kp CAPS  &kp Z &kp X           &kp C           &kp V            &kp B   &kp N                &kp M            &kp DOT         &kp COMMA       &kp SQT &kp LGUI
-                                   &mo 4           &mo 1            &sk_lt 2 LSHFT  &kp SPACE    &mo 3            &mt RSHFT F13
+                                   &mo 4           &mo 1            &sk_lt 2 LSHFT  &kp SPACE    &mo 3            &mt RSHFT F18
                         >;
                 };
                 arrow_layer {
