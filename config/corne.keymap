@@ -74,15 +74,14 @@
 // |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | ESC  |
 // | BKSP |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI|SUP+Z| ENT  |
 // | CWRD |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  '  | GUI  |
-//                    | F18 | MO1 | SFT |   | SPC | MO2 | MO4 |
+//                    |     | MO1 | SFT |   | SPC | MO2 | MO4 |
 // CWRD: Caps Word, capitals until Space or punctuation, then off.
-// F18: starts and stops Voxtype dictation.
                         display-name = "Main";
                         bindings = <
    &kp TAB   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp ESC
    &kp BSPC  &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp LG(Z) &kp RET
    &caps_word &kp Z &kp X          &kp C           &kp V            &kp B   &kp N                &kp M            &kp COMMA       &kp DOT         &kp SQT &kp LGUI
-                                   &kp F18         &mo 1            &kp LSHFT       &kp SPACE    &mo 2            &mo 4
+                                   &none           &mo 1            &kp LSHFT       &kp SPACE    &mo 2            &mo 4
                         >;
                 };
                 arrow_layer {
