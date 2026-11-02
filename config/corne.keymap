@@ -77,13 +77,22 @@
                 };
         };
 
-        // Press both middle thumbs together, in either order, for Numbers.
+        // Thumb pairs: press both together, in either order, and hold.
         combos {
                 compatible = "zmk,combos";
+                // Both middle thumbs (Arrow + Shift): Numbers.
                 numbers_combo {
                         timeout-ms = <50>;
                         key-positions = <37 40>;
                         bindings = <&numbers_on>;
+                };
+                // Both inner thumbs (Backspace + Space): Symbols. Ignored while
+                // typing fast so a quick Backspace-then-Space doesn't trigger it.
+                symbols_combo {
+                        timeout-ms = <50>;
+                        require-prior-idle-ms = <150>;
+                        key-positions = <38 39>;
+                        bindings = <&mo 2>;
                 };
         };
 
@@ -95,14 +104,14 @@
 // |  ESC |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | DEL  |
 // |  TAB |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI|SUP+Z| ENT  |
 // | CWRD |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  '  | GUI  |
-//                    | MO1 | SFT | BKSP|   | SPC | MO2 | MO4 |
+//                    |     | MO1 | BKSP|   | SPC | SFT | MO4 |
 // CWRD: Caps Word, capitals until Space or punctuation, then off.
                         display-name = "Main";
                         bindings = <
    &kp ESC   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp DEL
    &kp TAB   &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp LG(Z) &kp RET
    &caps_word &kp Z &kp X          &kp C           &kp V            &kp B   &kp N                &kp M            &kp COMMA       &kp DOT         &kp SQT &kp LGUI
-                                   &mo 1           &kp LSHFT        &kp BSPC        &kp SPACE    &mo 2           &mo 4
+                                   &none           &mo 1            &kp BSPC        &kp SPACE    &kp LSHFT       &mo 4
                         >;
                 };
                 arrow_layer {
@@ -110,7 +119,7 @@
 // |      | BRI-| BRI+| VOL-| VOL+|     |   |     | HOME| PGUP| PGDN| END |      |
 // |      |     | GUI | ALT | CTRL|     |   |     |  LFT|  UP | DWN | RGT |      |
 // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   |     |     |     |     |     |      |
-//                    |(held)|    |     |   |     |     |     |
+//                    |     |(held)|    |   |     |     |     |
 // Blank keys fall through to Main. Bluetooth keys sit on the bottom-left row
 // (unused on the Voyager Arrow layer) so pairing can still be switched or cleared.
                         display-name = "Arrow";
@@ -127,7 +136,7 @@
 // |      |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  `  |  ~  |      |
 // |      |  >  |{/GUI|[/ALT|(/CTL|  /  |   |  _  |  "  |  :  |  ;  |  =  |      |
 // |      |  <  |  }  |  ]  |  )  |  ?  |   |+/C+=|-/C+-|  \  |  |  |     |      |
-//                    |     |     |     |   |     |(held)|    |
+//                    |     |     |(held)|  |(held)|     |     |
 // Blank keys fall through to Main. Holding + or - sends Ctrl+= / Ctrl+- (zoom in / out).
                         display-name = "Symbols";
                         bindings = <
