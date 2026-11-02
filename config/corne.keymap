@@ -26,7 +26,7 @@
    &kp F1  &kp F2  &kp F3         &kp F4     &kp F5     &kp F6    &trans  &msc SCRL_LEFT &msc SCRL_UP  &msc SCRL_DOWN &msc SCRL_RIGHT &trans \
    &trans  &trans  &none          &mkp LCLK  &mkp RCLK  &trans    &trans  &mmv MOVE_LEFT &mmv MOVE_UP  &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans \
    &kp F7  &kp F8  &kp F9         &kp F10    &kp F11    &kp F12   &trans  &tog 5         &none         &none          &trans          &trans \
-                   &trans         &trans     &lt_q 2 BSPC           &trans  &trans         &trans
+                   &trans         &trans     &trans               &trans  &trans         &trans
 
 / {
         behaviors {
@@ -54,16 +54,6 @@
                         bindings = <&kp>, <&kp>;
                         hold-trigger-key-positions = <LEFT_KEYS THUMB_KEYS>;
                         hold-trigger-on-release;
-                };
-                // Left inner thumb: tap for Backspace, hold for a layer.
-                // Tap then quickly hold to repeat Backspace.
-                lt_q: layer_tap_quick {
-                        compatible = "zmk,behavior-hold-tap";
-                        #binding-cells = <2>;
-                        flavor = "balanced";
-                        tapping-term-ms = <200>;
-                        quick-tap-ms = <175>;
-                        bindings = <&mo>, <&kp>;
                 };
                 // Turns on Arrow and Symbols while held, which brings up Numbers
                 // (see conditional_layers) with its blanks falling through to Symbols.
@@ -105,15 +95,14 @@
 // |  ESC |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | DEL  |
 // |  TAB |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI|SUP+Z| ENT  |
 // | CWRD |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  '  | GUI  |
-//                    |     | MO1 |BS/L2|   | SPC | SFT | MO4 |
+//                    | MO1 | SFT | BKSP|   | SPC | MO2 | MO4 |
 // CWRD: Caps Word, capitals until Space or punctuation, then off.
-// BS/L2: tap = Backspace, hold = Symbols.
                         display-name = "Main";
                         bindings = <
    &kp ESC   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp DEL
    &kp TAB   &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp LG(Z) &kp RET
    &caps_word &kp Z &kp X          &kp C           &kp V            &kp B   &kp N                &kp M            &kp COMMA       &kp DOT         &kp SQT &kp LGUI
-                                   &none           &mo 1            &lt_q 2 BSPC    &kp SPACE    &kp LSHFT       &mo 4
+                                   &mo 1           &kp LSHFT        &kp BSPC        &kp SPACE    &mo 2           &mo 4
                         >;
                 };
                 arrow_layer {
@@ -121,7 +110,7 @@
 // |      | BRI-| BRI+| VOL-| VOL+|     |   |     | HOME| PGUP| PGDN| END |      |
 // |      |     | GUI | ALT | CTRL|     |   |     |  LFT|  UP | DWN | RGT |      |
 // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   |     |     |     |     |     |      |
-//                    |     |(held)|BS/L2|  |     |     |     |
+//                    |(held)|    |     |   |     |     |     |
 // Blank keys fall through to Main. Bluetooth keys sit on the bottom-left row
 // (unused on the Voyager Arrow layer) so pairing can still be switched or cleared.
                         display-name = "Arrow";
@@ -129,7 +118,7 @@
    &trans     &kp C_BRI_DN &kp C_BRI_UP &kp C_VOL_DN &kp C_VOL_UP &trans         &trans   &kp HOME &kp PG_UP &kp PG_DN &kp END   &trans
    &trans     &trans       &kp LGUI     &kp LALT     &kp LCTRL    &trans         &trans   &kp LEFT &kp UP    &kp DOWN  &kp RIGHT &trans
    &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &trans   &trans   &trans    &trans    &trans    &trans
-                                        &trans       &trans       &lt_q 2 BSPC         &trans   &trans   &trans
+                                        &trans       &trans       &trans         &trans   &trans   &trans
                         >;
                 };
 
@@ -138,14 +127,14 @@
 // |      |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  `  |  ~  |      |
 // |      |  >  |{/GUI|[/ALT|(/CTL|  /  |   |  _  |  "  |  :  |  ;  |  =  |      |
 // |      |  <  |  }  |  ]  |  )  |  ?  |   |+/C+=|-/C+-|  \  |  |  |     |      |
-//                    |     |     |(held)|  |     |     |     |
+//                    |     |     |     |   |     |(held)|    |
 // Blank keys fall through to Main. Holding + or - sends Ctrl+= / Ctrl+- (zoom in / out).
                         display-name = "Symbols";
                         bindings = <
    &trans &kp EXCL &kp AT         &kp HASH       &kp DLLR        &kp PRCNT   &kp CARET          &kp AMPS           &kp STAR  &kp GRAVE &kp TILDE &trans
    &trans &kp GT   &hml LGUI LBRC &hml LALT LBKT &hml LCTRL LPAR &kp FSLH    &kp UNDER          &kp DQT            &kp COLON &kp SEMI  &kp EQUAL &trans
    &trans &kp LT   &kp RBRC       &kp RBKT       &kp RPAR        &kp QMARK   &hmr LC(EQUAL) PLUS &hmr LC(MINUS) MINUS &kp BSLH  &kp PIPE  &trans    &trans
-                                  &trans         &trans          &lt_q 2 BSPC      &trans             &trans             &trans
+                                  &trans         &trans          &trans      &trans             &trans             &trans
                         >;
                 };
 
@@ -154,7 +143,7 @@
 // |      |     |     |     |     |     |   |     |     |     |     |     |      |
 // |      |  1  |  2  |3/ALT|4/CTL|  5  |   |  6  |7/CTL|8/ALT|  9  |  0  |      |
 // |      |     |     |     |     |     |   |  +  |  -  |  ,  |  .  |     |      |
-//                    |     |(held)|BS/L2|  |     |(held)|    |
+//                    |     |(held)|     |   |     |(held)|    |
 // Reached by pressing both middle thumbs together, in either order.
 // Blank keys fall through to Symbols, then Arrow, then Main (so the top row gives ! @ # ...).
                         display-name = "Numbers";
@@ -162,7 +151,7 @@
    &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans     &trans &trans &trans &trans
    &trans  &kp N1  &kp N2  &hml LALT N3  &hml LCTRL N4  &kp N5    &kp N6    &hmr RCTRL N7     &hmr RALT N8 &kp N9 &kp N0 &trans
    &trans  &trans  &trans  &trans  &trans  &trans    &kp PLUS  &kp MINUS  &kp COMMA &kp DOT &trans &trans
-                   &trans  &trans  &lt_q 2 BSPC            &trans    &trans     &trans
+                   &trans  &trans  &trans            &trans    &trans     &trans
                         >;
                 };
 
@@ -171,7 +160,7 @@
 // |  F1  |  F2 |  F3 |  F4 |  F5 |  F6 |   |     |WH LT|WH UP|WH DN|WH RT|      |
 // |      |     |     | LCLK| RCLK|     |   |     |MS LT|MS UP|MS DN|MS RT|      |
 // |  F7  |  F8 |  F9 | F10 | F11 | F12 |   |     | LOCK|     |     |     |      |
-//                    |     |     |BS/L2|   |     |     |(held)|
+//                    |     |     |     |   |     |     |(held)|
                         display-name = "Fn/Mouse";
                         bindings = <FN_MOUSE_BINDINGS>;
                 };
