@@ -55,14 +55,14 @@
                         hold-trigger-key-positions = <LEFT_KEYS THUMB_KEYS>;
                         hold-trigger-on-release;
                 };
-                // Left inner thumb: tap for a sticky Shift (applies to the next
-                // key only), hold for a layer.
-                sk_lt: sticky_shift_layer_tap {
-                        compatible = "zmk,behavior-hold-tap";
-                        #binding-cells = <2>;
-                        flavor = "balanced";
-                        tapping-term-ms = <200>;
-                        bindings = <&mo>, <&sk>;
+        };
+
+        // Holding Arrow (1) and Symbols (2) together turns on Numbers (3).
+        conditional_layers {
+                compatible = "zmk,conditional-layers";
+                tri_layer {
+                        if-layers = <1 2>;
+                        then-layer = <3>;
                 };
         };
 
@@ -71,18 +71,18 @@
 
                 default_layer {
 // -----------------------------------------------------------------------------------------
-// |  DEL |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | ESC  |
-// | BKSP |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI| TAB | ENT  |
-// | CAPS |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  .  |  ,  |  '  | GUI  |
-//                    |F18/S| MO1 |SK/L2|   | SPC | MO3 | MO4 |
-// SK/L2: tap = sticky Shift, hold = Symbols.
-// F18/S: tap = F18, hold = Shift.
+// |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | ESC  |
+// | BKSP |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI|SUP+Z| ENT  |
+// | CWRD |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  '  | GUI  |
+//                    | F18 | MO1 | SFT |   | SPC | MO2 | MO4 |
+// CWRD: Caps Word, capitals until Space or punctuation, then off.
+// F18: starts and stops Voxtype dictation.
                         display-name = "Main";
                         bindings = <
-   &kp DEL   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp ESC
-   &kp BSPC  &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp TAB &kp RET
-   &kp CAPS  &kp Z &kp X           &kp C           &kp V            &kp B   &kp N                &kp M            &kp DOT         &kp COMMA       &kp SQT &kp LGUI
-                                   &mt RSHFT F18   &mo 1            &sk_lt 2 LSHFT  &kp SPACE    &mo 3            &mo 4
+   &kp TAB   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp ESC
+   &kp BSPC  &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp LG(Z) &kp RET
+   &caps_word &kp Z &kp X          &kp C           &kp V            &kp B   &kp N                &kp M            &kp COMMA       &kp DOT         &kp SQT &kp LGUI
+                                   &kp F18         &mo 1            &kp LSHFT       &kp SPACE    &mo 2            &mo 4
                         >;
                 };
                 arrow_layer {
@@ -107,7 +107,7 @@
 // |      |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  `  |  ~  |      |
 // |      |  >  |{/GUI|[/ALT|(/CTL|  /  |   |  _  |  "  |  :  |  ;  |  =  |      |
 // |      |  <  |  }  |  ]  |  )  |  ?  |   |+/C+=|-/C+-|  \  |  |  |     |      |
-//                    |     |     |(held)|  |     |     |     |
+//                    |     |     |     |   |     |(held)|    |
 // Blank keys fall through to Main. Holding + or - sends Ctrl+= / Ctrl+- (zoom in / out).
                         display-name = "Symbols";
                         bindings = <
@@ -121,15 +121,16 @@
                 numbers_layer {
 // -----------------------------------------------------------------------------------------
 // |      |     |     |     |     |     |   |     |     |     |     |     |      |
-// |      |  1  |  2  |  3  |4/CTL|  5  |   |  6  |7/CTL|  8  |  9  |  0  |      |
-// |      |     |     |     |     |     |   |  +  |  -  |     |     |     |      |
-//                    |     |     |     |   |     |(held)|    |
-// Blank keys fall through to Main.
+// |      |  1  |  2  |3/ALT|4/CTL|  5  |   |  6  |7/CTL|8/ALT|  9  |  0  |      |
+// |      |     |     |     |     |     |   |  +  |  -  |  ,  |  .  |     |      |
+//                    |     |(held)|    |   |     |(held)|    |
+// Reached by holding both middle thumbs (Arrow + Symbols), in either order.
+// Blank keys fall through to Symbols, then Arrow, then Main (so the top row gives ! @ # ...).
                         display-name = "Numbers";
                         bindings = <
    &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans     &trans &trans &trans &trans
-   &trans  &kp N1  &kp N2  &kp N3  &hml LCTRL N4  &kp N5    &kp N6    &hmr RCTRL N7     &kp N8 &kp N9 &kp N0 &trans
-   &trans  &trans  &trans  &trans  &trans  &trans    &kp PLUS  &kp MINUS  &trans &trans &trans &trans
+   &trans  &kp N1  &kp N2  &hml LALT N3  &hml LCTRL N4  &kp N5    &kp N6    &hmr RCTRL N7     &hmr RALT N8 &kp N9 &kp N0 &trans
+   &trans  &trans  &trans  &trans  &trans  &trans    &kp PLUS  &kp MINUS  &kp COMMA &kp DOT &trans &trans
                    &trans  &trans  &trans            &trans    &trans     &trans
                         >;
                 };
