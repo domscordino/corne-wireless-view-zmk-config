@@ -55,17 +55,6 @@
                         hold-trigger-key-positions = <LEFT_KEYS THUMB_KEYS>;
                         hold-trigger-on-release;
                 };
-                // Turns on Arrow and Symbols while held, which brings up Numbers
-                // (see conditional_layers) with its blanks falling through to Symbols.
-                numbers_on: numbers_on {
-                        compatible = "zmk,behavior-macro";
-                        #binding-cells = <0>;
-                        bindings
-                                = <&macro_press &mo 1 &mo 2>
-                                , <&macro_pause_for_release>
-                                , <&macro_release &mo 1 &mo 2>
-                                ;
-                };
         };
 
         // Arrow (1) and Symbols (2) on together turns on Numbers (3).
@@ -77,22 +66,15 @@
                 };
         };
 
-        // Thumb pairs: press both together, in either order, and hold.
         combos {
                 compatible = "zmk,combos";
-                // Both middle thumbs (Arrow + Shift): Numbers.
-                numbers_combo {
+                // Both inner thumbs (Backspace + Space) pressed together, either
+                // order: Shift while held. No idle requirement, because a capital
+                // often comes right after a Space.
+                shift_combo {
                         timeout-ms = <50>;
-                        key-positions = <37 40>;
-                        bindings = <&numbers_on>;
-                };
-                // Both inner thumbs (Backspace + Space): Symbols. Ignored while
-                // typing fast so a quick Backspace-then-Space doesn't trigger it.
-                symbols_combo {
-                        timeout-ms = <50>;
-                        require-prior-idle-ms = <150>;
                         key-positions = <38 39>;
-                        bindings = <&mo 2>;
+                        bindings = <&kp LSHFT>;
                 };
         };
 
@@ -104,15 +86,16 @@
 // |  ESC |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | DEL  |
 // |  TAB |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI|SUP+Z| ENT  |
 // | CWRD |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  '  | GUI  |
-//                    | F18 | MO1 | BKSP|   | SPC | SFT | MO4 |
+//                    | F18 | MO1 | BKSP|   | SPC | MO2 | MO4 |
 // CWRD: Caps Word, capitals until Space or punctuation, then off.
 // F18: starts and stops Voxtype dictation.
+// Shift: hold BKSP and SPC together (see shift_combo).
                         display-name = "Main";
                         bindings = <
    &kp ESC   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp DEL
    &kp TAB   &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp LG(Z) &kp RET
    &caps_word &kp Z &kp X          &kp C           &kp V            &kp B   &kp N                &kp M            &kp COMMA       &kp DOT         &kp SQT &kp LGUI
-                                   &kp F18         &mo 1            &kp BSPC        &kp SPACE    &kp LSHFT       &mo 4
+                                   &kp F18         &mo 1            &kp BSPC        &kp SPACE    &mo 2           &mo 4
                         >;
                 };
                 arrow_layer {
@@ -137,7 +120,7 @@
 // |      |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  `  |  ~  |      |
 // |      |  >  |{/GUI|[/ALT|(/CTL|  /  |   |  _  |  "  |  :  |  ;  |  =  |      |
 // |      |  <  |  }  |  ]  |  )  |  ?  |   |+/C+=|-/C+-|  \  |  |  |     |      |
-//                    |     |     |(held)|  |(held)|     |     |
+//                    |     |     |     |   |     |(held)|     |
 // Blank keys fall through to Main. Holding + or - sends Ctrl+= / Ctrl+- (zoom in / out).
                         display-name = "Symbols";
                         bindings = <
@@ -154,7 +137,7 @@
 // |      |  1  |  2  |3/ALT|4/CTL|  5  |   |  6  |7/CTL|8/ALT|  9  |  0  |      |
 // |      |     |     |     |     |     |   |  +  |  -  |  ,  |  .  |     |      |
 //                    |     |(held)|     |   |     |(held)|    |
-// Reached by pressing both middle thumbs together, in either order.
+// Reached by holding both middle thumbs (Arrow + Symbols), in either order.
 // Blank keys fall through to Symbols, then Arrow, then Main (so the top row gives ! @ # ...).
                         display-name = "Numbers";
                         bindings = <
