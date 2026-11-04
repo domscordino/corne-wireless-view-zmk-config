@@ -86,31 +86,31 @@
 // |  ESC |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U  |  I  |  O  |  P  | DEL  |
 // |  TAB |  A  |S/GUI|D/ALT|F/CTL|  G  |   |H/S+C|J/CTL|K/ALT|L/GUI|SUP+Z| ENT  |
 // | CWRD |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  '  | GUI  |
-//                    | F18 | MO1 | BKSP|   | SPC | MO2 | MO4 |
+//                    | MO1 | SFT | BKSP|   | SPC | MO2 | MO4 |
 // CWRD: Caps Word, capitals until Space or punctuation, then off.
-// F18: starts and stops Voxtype dictation.
 // Shift: hold BKSP and SPC together (see shift_combo).
                         display-name = "Main";
                         bindings = <
    &kp ESC   &kp Q &kp W           &kp E           &kp R            &kp T   &kp Y                &kp U            &kp I           &kp O           &kp P   &kp DEL
    &kp TAB   &kp A &hml LGUI S     &hml LALT D     &hml LCTRL F     &kp G   &hmr LS(LCTRL) H     &hmr RCTRL J     &hmr RALT K     &hmr RGUI L     &kp LG(Z) &kp RET
    &caps_word &kp Z &kp X          &kp C           &kp V            &kp B   &kp N                &kp M            &kp COMMA       &kp DOT         &kp SQT &kp LGUI
-                                   &kp F18         &mo 1            &kp BSPC        &kp SPACE    &mo 2           &mo 4
+                                   &mo 1           &kp LSHFT        &kp BSPC        &kp SPACE    &mo 2           &mo 4
                         >;
                 };
                 arrow_layer {
 // -----------------------------------------------------------------------------------------
 // |      | BRI-| BRI+| VOL-| VOL+|     |   |     | HOME| PGUP| PGDN| END |      |
 // |      |     | GUI | ALT | CTRL|     |   |     |  LFT|  UP | DWN | RGT |      |
-// | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   |     |     |     |     |     |      |
-//                    |     |(held)|    |   |     |     |     |
+// | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   |     |     |     |     |     | F18  |
+//                    |(held)|     |    |   |     |     |     |
 // Blank keys fall through to Main. Bluetooth keys sit on the bottom-left row
 // (unused on the Voyager Arrow layer) so pairing can still be switched or cleared.
+// F18 (bottom-right): starts and stops Voxtype dictation.
                         display-name = "Arrow";
                         bindings = <
    &trans     &kp C_BRI_DN &kp C_BRI_UP &kp C_VOL_DN &kp C_VOL_UP &trans         &trans   &kp HOME &kp PG_UP &kp PG_DN &kp END   &trans
    &trans     &trans       &kp LGUI     &kp LALT     &kp LCTRL    &trans         &trans   &kp LEFT &kp UP    &kp DOWN  &kp RIGHT &trans
-   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &trans   &trans   &trans    &trans    &trans    &trans
+   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &trans   &trans   &trans    &trans    &trans    &kp F18
                                         &trans       &trans       &trans         &trans   &trans   &trans
                         >;
                 };
@@ -136,8 +136,8 @@
 // |      |     |     |     |     |     |   |     |     |     |     |     |      |
 // |      |  1  |  2  |3/ALT|4/CTL|  5  |   |  6  |7/CTL|8/ALT|  9  |  0  |      |
 // |      |     |     |     |     |     |   |  +  |  -  |  ,  |  .  |     |      |
-//                    |     |(held)|     |   |     |(held)|    |
-// Reached by holding both middle thumbs (Arrow + Symbols), in either order.
+//                    |(held)|     |     |   |     |(held)|    |
+// Reached by holding Arrow (left outer) and Symbols (right middle) together, either order.
 // Blank keys fall through to Symbols, then Arrow, then Main (so the top row gives ! @ # ...).
                         display-name = "Numbers";
                         bindings = <
